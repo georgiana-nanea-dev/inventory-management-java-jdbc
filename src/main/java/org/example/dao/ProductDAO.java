@@ -6,6 +6,7 @@ import org.example.model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +27,14 @@ public class ProductDAO {
             stmt.setDouble(3, product.getPrice());
             stmt.setInt(4, product.getQuantity());
 
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
 
-            System.out.println("Product saved successfully!");
+            if (rows > 0) {
+                System.out.println("Product saved successfully!");
+            }
 
-        } catch (Exception e) {
-            System.out.println("Error (INSERT): " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Database error while inserting: " + e.getMessage());
         }
     }
 
@@ -43,30 +46,59 @@ public class ProductDAO {
 
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products";
+        String sql = """
+                SELECT id, name, category, price, quantity
+                FROM products
+                ORDER BY id
+                """;
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
+
             while (rs.next()) {
 
-                Product p = new Product();
+                Product product = new Product();
 
-                p.setId(rs.getInt("id"));
-                p.setName(rs.getString("name"));
-                p.setCategory(rs.getString("category"));
-                p.setPrice(rs.getDouble("price"));
-                p.setQuantity(rs.getInt("quantity"));
+                product.setId(rs.getInt("id"));
+                product.setName(rs.getString("name"));
+                product.setCategory(rs.getString("category"));
+                product.setPrice(rs.getDouble("price"));
+                product.setQuantity(rs.getInt("quantity"));
 
-                products.add(p);
+                products.add(product);
             }
 
-        } catch (Exception e) {
-            System.out.println("Error (SELECT): " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Database error while reading: " + e.getMessage());
         }
 
         return products;
+    }
+
+
+    // =========================
+    // CHECK - Existiert Produkt?
+    // =========================
+    public boolean existsById(int id) {
+
+        String sql = "SELECT id FROM products WHERE id=?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+
+        } catch (SQLException e) {
+
+            System.out.println("Database error while checking ID: " + e.getMessage());
+            return false;
+        }
     }
 
 
@@ -75,10 +107,15 @@ public class ProductDAO {
     // =========================
     public void updateProduct(Product product) {
 
-        String sql = "UPDATE products SET name=?, category=?, price=?, quantity=? WHERE id=?";
+        String sql = """
+                UPDATE products
+                SET name=?, category=?, price=?, quantity=?
+                WHERE id=?
+                """;
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
 
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getCategory());
@@ -86,12 +123,23 @@ public class ProductDAO {
             stmt.setInt(4, product.getQuantity());
             stmt.setInt(5, product.getId());
 
-            stmt.executeUpdate();
 
-            System.out.println("Product updated successfully!");
+            int rows = stmt.executeUpdate();
 
-        } catch (Exception e) {
-            System.out.println("Error (UPDATE): " + e.getMessage());
+
+            if (rows > 0) {
+
+                System.out.println("Product updated successfully!");
+
+            } else {
+
+                System.out.println("No product found with this ID.");
+            }
+
+
+        } catch (SQLException e) {
+
+            System.out.println("Database error while updating: " + e.getMessage());
         }
     }
 
@@ -103,17 +151,29 @@ public class ProductDAO {
 
         String sql = "DELETE FROM products WHERE id=?";
 
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+
             stmt.setInt(1, id);
 
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
 
-            System.out.println("Product deleted successfully!");
 
-        } catch (Exception e) {
-            System.out.println("Error (DELETE): " + e.getMessage());
+            if (rows > 0) {
+
+                System.out.println("Product deleted successfully!");
+
+            } else {
+
+                System.out.println("No product found with this ID.");
+            }
+
+
+        } catch (SQLException e) {
+
+            System.out.println("Database error while deleting: " + e.getMessage());
         }
     }
 }
