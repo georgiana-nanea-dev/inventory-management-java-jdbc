@@ -115,13 +115,17 @@ private static final String PASSWORD = "";
 
 ## Screenshots
 
-(Add screenshots here)
+### Application Menu
 
-Examples:
+![Application Menu](screenshots/menu.png)
 
-* Application menu
-* Product list
-* IntelliJ project structure
+### Product List
+
+![Product List](screenshots/products.png)
+
+### IntelliJ Project Structure
+
+![Project Structure](screenshots/project-structure.png)
 
 ---
 
