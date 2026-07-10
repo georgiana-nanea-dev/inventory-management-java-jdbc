@@ -2,18 +2,18 @@
 
 ## Project Description
 
-The Inventory Management System is a Java console application for managing products stored in a MySQL database.
+The Inventory Management System is a Java console application for managing product data stored in a MySQL database.
 
-The application provides complete CRUD functionality:
+The application provides CRUD operations:
 
 * Create products
-* Read products
-* Update products
+* Read product information
+* Update existing products
 * Delete products
 
-The project demonstrates Java backend development using JDBC, MySQL, Maven, and the DAO (Data Access Object) design pattern to separate database operations from application logic.
+This project demonstrates Java backend development using JDBC, MySQL, Maven, and the DAO (Data Access Object) design pattern to separate database operations from application logic.
 
-This project was developed to improve skills in Java programming, database integration, SQL, and software project organization.
+The goal of this project was to improve practical skills in Java programming, database integration, SQL, and software project organization.
 
 ---
 
@@ -45,7 +45,7 @@ This project was developed to improve skills in Java programming, database integ
 
 ## Project Structure
 
-```
+```text
 src
 └── main
     └── java
@@ -83,9 +83,9 @@ CREATE TABLE products (
 
 ### 3. Configure database connection
 
-Update the credentials in:
+Update the database credentials in:
 
-```
+```text
 DatabaseConnection.java
 ```
 
@@ -108,28 +108,34 @@ private static final String PASSWORD = "";
 2. Open the project in IntelliJ IDEA.
 3. Start MySQL using XAMPP.
 4. Create the database and products table.
-5. Run `Main.java`.
-6. Use the console menu to manage products.
+5. Configure the database connection.
+6. Run `Main.java`.
+7. Use the console menu to manage products.
 
 ---
 
 ## Screenshots
 
-### Application Menu
+Add screenshots of the application here:
 
-![Application Menu](screenshots/menu.png)
+* Application menu
+* Product list
+* Project structure
 
-### Product List
+Example:
 
-![Product List](screenshots/products.png)
-
-### IntelliJ Project Structure
-
-![Project Structure](screenshots/project-structure.png)
+```text
+screenshots/
+├── menu.png
+├── products.png
+└── project-structure.png
+```
 
 ---
 
 ## Future Improvements
+
+Possible future improvements:
 
 * Search products
 * Sort products
