@@ -4,7 +4,7 @@
 
 The Inventory Management System is a Java console application for managing product data stored in a MySQL database.
 
-The application provides CRUD operations:
+The application provides complete CRUD operations:
 
 * Create products
 * Read product information
@@ -83,7 +83,7 @@ CREATE TABLE products (
 
 ### 3. Configure database connection
 
-Update the database credentials in:
+Update your MySQL credentials in:
 
 ```text
 DatabaseConnection.java
@@ -95,9 +95,9 @@ Example:
 private static final String URL =
 "jdbc:mysql://localhost:3306/inventory_db";
 
-private static final String USER = "root";
+private static final String USER = "your_username";
 
-private static final String PASSWORD = "";
+private static final String PASSWORD = "your_password";
 ```
 
 ---
@@ -106,7 +106,7 @@ private static final String PASSWORD = "";
 
 1. Clone the repository.
 2. Open the project in IntelliJ IDEA.
-3. Start MySQL using XAMPP.
+3. Start MySQL using XAMPP or another MySQL server.
 4. Create the database and products table.
 5. Configure the database connection.
 6. Run `Main.java`.
@@ -116,20 +116,19 @@ private static final String PASSWORD = "";
 
 ## Screenshots
 
-Add screenshots of the application here:
+The following screenshots demonstrate the application interface and project structure.
 
-* Application menu
-* Product list
-* Project structure
+### Application Menu
 
-Example:
+![Application Menu](screenshots/menu.png)
 
-```text
-screenshots/
-├── menu.png
-├── products.png
-└── project-structure.png
-```
+### Product List
+
+![Product List](screenshots/products.png)
+
+### Project Structure
+
+![Project Structure](screenshots/project-structure.png)
 
 ---
 
